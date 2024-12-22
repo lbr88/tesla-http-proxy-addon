@@ -66,6 +66,7 @@ elif [ -f /share/tesla/com.tesla.3p.public-key.pem ] && [ -f /share/tesla/selfsi
   keyPubKey="$(openssl pkey -pubout -in /data/key.pem)"
   if [ "${certPubKey}" == "${keyPubKey}" ]; then
     bashio::log.info "Found existing keypair"
+    cat /share/tesla/com.tesla.3p.public-key.pem
   else
     bashio::log.warning "Existing certificate is invalid"
     generate_keypair
