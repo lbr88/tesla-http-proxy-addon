@@ -3,7 +3,7 @@ import logging
 import random
 import string
 from urllib.parse import urlparse, parse_qs
-from flask import cli, Flask, render_template, request
+from flask import cli, Flask, render_template, request, Response
 from werkzeug.exceptions import HTTPException
 import requests
 
@@ -103,6 +103,11 @@ def callback():
 
     return render_template('callback.html', refresh_token=refresh_token)
 
+@app.route('/.well-known/appspecific/com.tesla.3p.public-key.pem')
+def public_key():
+    """Return public key for Tesla server"""
+    file_path = '/share/tesla/public-key.pem'
+    return Response(open(file_path).read(), mimetype='text/plain')
 
 if __name__ == '__main__':
     logger.info('Starting Flask server for Web UI...')
